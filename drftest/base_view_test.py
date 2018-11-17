@@ -10,13 +10,8 @@ from rest_framework import status
 from rest_framework.test import APITestCase, APIRequestFactory, APIClient
 
 from drftest import doc_generator
+from drftest.auth_provider import AuthProvider
 from drftest.uuid_encoder import UUIDEncoder
-
-
-class AuthProvider:
-    @abstractmethod
-    def set_auth(self, api_client, user):
-        raise NotImplementedError()
 
 
 class BaseViewTest(APITestCase):

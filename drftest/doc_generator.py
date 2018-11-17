@@ -5,8 +5,6 @@ from typing import Dict
 from django.conf import settings
 from django.template import loader
 
-from drftest.base_view_test import BaseViewTest
-
 """
 {
     'method': 'POST',
@@ -39,7 +37,7 @@ def _categorize_store() -> Dict:
     This function categorizes items in that list by (first) app_name and (secondly) class_name.
     """
     categorized = {}
-    for test_result in BaseViewTest.docs_store:
+    for test_result in store:
         app_name = test_result['meta']['app_name']
         class_name = test_result['meta']['class_name']
         if app_name not in categorized:
