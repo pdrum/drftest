@@ -125,7 +125,7 @@ class BaseViewTest(APITestCase, metaclass=ABCTestMeta):
                 self._make_url(kwargs=url_kwargs), data=data, format=format, **headers)
         if format != 'json':
             return response
-        self._generate_docs(response, method, data, url_kwargs, format, headers)
+        self._generate_docs(response, method, data, url_kwargs, format, headers, user)
         return response
 
     def ensure_json_serializable(self, obj, fail_silently=True):
@@ -146,7 +146,11 @@ class BaseViewTest(APITestCase, metaclass=ABCTestMeta):
             'HTTP_' + k.upper().replace('-', '_'): v for k, v in headers.items()
         }
 
-    def _generate_docs(self, response, method, data, url_kwargs, format, headers):
+    def _generate_docs(self, response, method, data, url_kwargs, format, headers, user):
+        if self.current_test_name in ['test_has_permission_classes',
+                                      'test_resolves_view',
+                                      'test_calling_endpoint']:
+            return
         app_name = self.__class__.__module__.split('.')[0]
         url = self._make_url(url_kwargs)
         method_name = {
@@ -157,6 +161,8 @@ class BaseViewTest(APITestCase, metaclass=ABCTestMeta):
             self.api_client.put: 'put'
         }[method]
         response_data = response.data if hasattr(response, 'data') else {}
+        headers = headers or {}
+        headers.update(self._get_auth_provider().get_auth_headers(user))
         doc_generator.store.append({
             'method': method_name,
             'data': self.ensure_json_serializable(data),
