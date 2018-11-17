@@ -3,10 +3,13 @@ from inspect import isclass
 
 from rest_framework.settings import api_settings
 
+from drftest.abc_test_meta import ABCTestMeta
 from drftest.base_view_test import BaseViewTest
 
+ABCTestMeta.add_ignored_test_class_name('BaseAuthenticatedViewTest')
 
-class BaseAuthenticatedViewTest(BaseViewTest):
+
+class BaseAuthenticatedViewTest(BaseViewTest, metaclass=ABCTestMeta):
     @abstractmethod
     def _get_permission_classes(self):
         raise NotImplementedError()

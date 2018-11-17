@@ -10,11 +10,14 @@ from rest_framework import status
 from rest_framework.test import APITestCase, APIRequestFactory, APIClient
 
 from drftest import doc_generator
+from drftest.abc_test_meta import ABCTestMeta
 from drftest.auth_provider import AuthProvider
 from drftest.uuid_encoder import UUIDEncoder
 
+ABCTestMeta.add_ignored_test_class_name('BaseViewTest')
 
-class BaseViewTest(APITestCase):
+
+class BaseViewTest(APITestCase, metaclass=ABCTestMeta):
     auth_provider_class = None
     current_test_name = None
     current_test_doc = None
