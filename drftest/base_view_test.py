@@ -181,6 +181,7 @@ class BaseViewTest(APITestCase, metaclass=ABCTestMeta):
         response_data = response.data if hasattr(response, 'data') else {}
         headers = headers or {}
         headers.update(self._get_auth_provider().get_auth_headers(user))
+        doc_generator.class_docs[self.__class__.__name__] = self.__class__.__doc__
         doc_generator.store.append({
             'method': method_name,
             'data': self._ensure_json_serializable(data),

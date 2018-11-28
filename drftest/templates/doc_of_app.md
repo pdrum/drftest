@@ -6,11 +6,17 @@
 Tests are categorized into classes where each class has
 several test cases.
 
-{% for class_name, method_docs in app_docs.items %}
+{% for class_name, class_docs in app_docs.items %}
 ## {{ class_name }}
-This class has the following test cases
 
-{% for method_doc in method_docs %}
+{% if class_docs.description %}
+{{ class_docs.description }}
+{% endif %}
+
+This class has the following test cases:
+
+
+{% for method_doc in class_docs.tests %}
 <details>
 <summary>{% if method_doc.success %}&#10004;{% else %}&#10008;{% endif %} **{{ method_doc.meta.method_name }}**
 </summary>

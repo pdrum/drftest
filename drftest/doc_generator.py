@@ -1,9 +1,11 @@
 import os
 import shutil
+import textwrap
 from typing import Dict
 
 from django.conf import settings
 from django.template import loader
+from django.utils.safestring import mark_safe
 
 """
 {
@@ -27,6 +29,10 @@ from django.template import loader
 }
 """
 store = []
+"""
+class_docs keeps a dictionary which maps name of test class to its docs.
+"""
+class_docs = {}
 
 
 def _categorize_store() -> Dict:
@@ -43,9 +49,11 @@ def _categorize_store() -> Dict:
         if app_name not in categorized:
             categorized[app_name] = {}
         if class_name not in categorized[app_name]:
-            categorized[app_name][class_name] = [test_result]
-        else:
-            categorized[app_name][class_name].append(test_result)
+            categorized[app_name][class_name] = {
+                'tests': [],
+                'description': textwrap.dedent(mark_safe(class_docs.get(class_name) or '')),
+            }
+        categorized[app_name][class_name]['tests'].append(test_result)
     return categorized
 
 
@@ -81,16 +89,6 @@ def _rewrite_yml(root_dir: str):
         yml_file.write('site_name: DRF Tests')
 
 
-class MdFileNameGenerator:
-    index_generated = False
-
-    def new_name(self, app_name: str):
-        if not self.index_generated:
-            self.index_generated = True
-            return 'index.md'
-        return '{}.md'.format(app_name)
-
-
 def write_docs():
     if not hasattr(settings, 'DRF_TEST_DOCS_DIR') or not settings.DRF_TEST_DOCS_DIR:
         return
@@ -99,11 +97,8 @@ def write_docs():
         os.mkdir(_get_root_dir())
 
     _clear_docs_path()
-    _rewrite_yml(_get_root_dir())
-    md_namer = MdFileNameGenerator()
     for app_name, app_docs in _categorize_store().items():
-        file_name = md_namer.new_name(app_name)
-        md_path = os.path.join(_get_docs_path(), file_name)
+        md_path = os.path.join(_get_docs_path(), '{}.md'.format(app_name))
         t = loader.get_template('doc_of_app.md')
         rendered = t.render({
             'app_name': app_name,
@@ -111,3 +106,18 @@ def write_docs():
         })
         with open(md_path, 'w+') as md_file:
             md_file.write(rendered)
+    index_path = os.path.join(_get_docs_path(), 'index.md')
+    with open(index_path, 'w+') as index_file:
+        index_file.write("""
+# Welcome
+
+Welcome to *DRF Test* documentation. 
+
+This documentation is categorized according to subsystems of your code.
+Name of each subsystem is given in the navigation menu. You can click on 
+each item to visit documentation of that subsystem.
+
+Happy coding :)
+        """)
+
+    _rewrite_yml(_get_root_dir())
