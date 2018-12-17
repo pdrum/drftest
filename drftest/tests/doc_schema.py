@@ -9,7 +9,7 @@ def is_json_serializable(data):
     try:
         json.dumps(data)
         return True
-    except:
+    except Exception:
         return False
 
 

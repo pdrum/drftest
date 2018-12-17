@@ -36,7 +36,7 @@ urlpatterns = [
 
 
 @override_settings(ROOT_URLCONF=__name__)
-class DummyViewTest(BaseViewTest):
+class DummyViewPostTest(BaseViewTest):
     """
     Class docstring
     """

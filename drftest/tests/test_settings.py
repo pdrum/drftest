@@ -25,9 +25,14 @@ REST_FRAMEWORK = {
     ),
 }
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+    },
+]
+
 SECRET_KEY = "Dummy"
 TEST_RUNNER = 'drftest.TestRunner'
 DRF_TEST_AUTH_PROVIDER_CLASS = 'drftest.token_auth_provider.TokenAuthProvider'
-
-drftest_LISTENER_HOST = 'http://example.com'
-drftest_NAMESPACE = 'drftest'
