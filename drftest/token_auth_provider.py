@@ -1,5 +1,3 @@
-from typing import Dict
-
 from django.contrib.auth.models import User
 from drftest.auth_provider import AuthProvider
 from rest_framework.authtoken.models import Token
@@ -17,7 +15,7 @@ class TokenAuthProvider(AuthProvider):
         token = self._new_token(user)
         api_client.credentials(HTTP_AUTHORIZATION='Token {}'.format(token))
 
-    def get_auth_headers(self, user: User) -> Dict:
+    def get_auth_headers(self, user: User):
         if user is None:
             return {}
         return {'Authorization': 'Token {}'.format(self._new_token(user))}

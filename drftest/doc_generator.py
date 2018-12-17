@@ -1,7 +1,6 @@
 import os
 import shutil
 import textwrap
-from typing import Dict
 
 from django.conf import settings
 from django.template import loader
@@ -35,7 +34,7 @@ class_docs keeps a dictionary which maps name of test class to its docs.
 class_docs = {}
 
 
-def _categorize_store() -> Dict:
+def _categorize_store():
     """
     doc entry for each test case in `BaseViewTest` is a flat dictionary. with no categorization
     based on app, class or method.
