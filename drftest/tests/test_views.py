@@ -81,7 +81,7 @@ class DummyViewPostTest(BaseViewTest):
         self.assertTrue(doc['success'])
         self.assertEqual(doc['meta']['docs'].strip(), 'Method docstring')
         self.assertEqual(doc['meta']['method_name'].strip(), 'test_values_of_doc_dict')
-        self.assertEqual(doc['meta']['class_name'].strip(), 'DummyViewTest')
+        self.assertEqual(doc['meta']['class_name'].strip(), 'DummyViewPostTest')
         self.assertEqual(doc['meta']['app_name'].strip(), 'drftest')
         self.assertEqual(doc['response']['status'], status.HTTP_200_OK)
         self.assertEqual(doc['response']['data'], {'e': 'f'})
@@ -90,7 +90,7 @@ class DummyViewPostTest(BaseViewTest):
         response = self._post_for_response(user=self.user, data={'foo': 'bar'})
         self.assertSuccess(response)
         self.assertEqual(
-            doc_generator.class_docs.get('DummyViewTest', '').strip(),
+            doc_generator.class_docs.get('DummyViewPostTest', '').strip(),
             'Class docstring'
         )
 
