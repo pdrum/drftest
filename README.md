@@ -14,7 +14,7 @@ value. With **DRF Test** API docs will be generated based on your tests. So as l
 tests pass and your code is working, you can be sure that your docs are also up to date!
 
 # Installation
-Run `pip install drftest`
+Run `pip install drftest`. Also Make sure you use `python >= 3.4.0`.
 
 # Preparation
 In order to use `DRF Test` initially you need to take the following four steps:
