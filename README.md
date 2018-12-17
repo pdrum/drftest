@@ -1,6 +1,8 @@
 DRF Test
 ----------
 
+[![Build Status](https://travis-ci.com/pdrum/drftest.svg?branch=master)](https://travis-ci.com/pdrum/drftest)
+
 **DRF Test** is a minimal testing library that aims to facilitate writing **DRY** tests for 
 django rest framework views. It also [optionally] generates good looking API documentations based
 on tests it runs. 
