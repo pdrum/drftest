@@ -1,16 +1,16 @@
 language: python
 python:
-  - "3.4"
-  - "3.5"
-  - "3.6"
-
+- '3.4'
+- '3.5'
+- '3.6'
 install:
-  - pip install -r requirements.txt
-
+- pip install -r requirements.txt
 script:
-  - python manage.py test
-
+- python manage.py test
 deploy:
   provider: pypi
+  user: pdrum
+  password:
+    secure: qk3PYznKqV4fpsS3EchZJ/sIOIMfapTUP9sg77b2ZpPwzeemKUi4ekfZn3hRZgSgEJW0zjHFi+Com2dhiM3YwOog6hxl3/QISQcPUyBTEO1xdUxw4eVIj1NO3VDqxNc6Du6hdqJ3IxUudbiKpRU534K+mv+Sq5N45hLz0b2ZUThC7yF4lhVVCHYC07SEzbESNWeeqURiOMnMrLX1Z6ggiR3BaMBAtuID4dCvMeVNybxt+iJ/pKYFsiIB3A03Ys35QSuluMMLzNCLk5g/PPOISpEx05cDYbhNFLvRqCVz4IpewO6WFjTmHJQi2nmm+cYCvSXle2NwDpgJQn0G61Da2aEHDAJLkC2felsRz/MBs7K+MBmF0bnBsqPp/XlQi03CZQ8xeYlOsco+O9QNQw1joGv2LVBc6/f9FChn8iCFggaDGoQCKedfQl6Sg5uTdf4vkMlKEvZruZA1ctx8xkVfkf7KxpsuqwfW3MMMeyHanoUb2CSAuGr9py2d0msOU+X49e3yYgYeTtAjctz6J284oDeCL6ZaVRBbJug+4I9LAXUlf+2RiB7f8f0eIwXnQdrdbPoUzKOceFJjbDBiIX9SMCYi0/akOv4DuQri9OC2Jb9neSPIxlooJlHVka0+fh+TUw85N7Bcxzx+EJSr18mLObRbpj9lhuPNmGJOtqbtfoY=
   on:
     tags: true
