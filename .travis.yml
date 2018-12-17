@@ -12,7 +12,5 @@ script:
 
 deploy:
   provider: pypi
-  user: pdrum
-  password:
   on:
     tags: true
