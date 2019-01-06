@@ -10,11 +10,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='drftest',
-<<<<<<< HEAD
-    version='1.0.1',
-=======
-    version='1.0.2',
->>>>>>> 830b6e021fa8204d4931e92029b7bd500cec759d
+    version='1.0.3',
     packages=find_packages(),
     include_package_data=True,
     license='MIT License',
