@@ -1,6 +1,8 @@
 DRF Test
 ----------
 
+[![Build Status](https://travis-ci.com/pdrum/drftest.svg?branch=master)](https://travis-ci.com/pdrum/drftest)
+
 **DRF Test** is a minimal testing library that aims to facilitate writing **DRY** tests for 
 django rest framework views. It also [optionally] generates good looking API documentations based
 on tests it runs. 
@@ -12,7 +14,14 @@ value. With **DRF Test** API docs will be generated based on your tests. So as l
 tests pass and your code is working, you can be sure that your docs are also up to date!
 
 # Installation
-Run `pip install drftest`
+Run `pip install drftest`. Also Make sure you use `python >= 3.4.0`.
+
+# Links
+**DRF Test** can be accessed using:
+
+* Pypi: https://pypi.org/project/drftest/
+* Repo exemplifying how to use **DRF Test**: https://github.com/pdrum/drftest_example
+* Documentation demo: https://drftest.netlify.com/
 
 # Preparation
 In order to use `DRF Test` initially you need to take the following four steps:
@@ -58,16 +67,16 @@ DRF_TEST_AUTH_PROVIDER_CLASS = 'my_auth_provider.MyAuthProvider'
 
 * Optionally you can set value of a special variable called `DRF_TEST_DOCS_DIR` in your
 settings if you do so, then **DRF Test** will create a nice documentation in the directory
-specified by `DRF_TEST_DOCS_DIR`. In this documentation will provide a view of what each
-endpoint you have tested gets as an input and what it produces as an output. If this 
+specified by `DRF_TEST_DOCS_DIR`. In this documentation **DRF Test** will demonstrate what the 
+input and output is for each of your APIs under test. If this 
 variable is not set **DRF Test** will avoid creating docs after tests are run. It's also 
 a good idea to let `DRF_TEST_DOCS_DIR` be a directory under root of your django project so 
 that it is kept track of using VCS under the same repository as the rest of your code.
 
 # Writing your first test
 **DRF Test** is not just about generating docs but it also helps you not repeat yourself while
-writing tests for your django views. Writing tests usinng **DRF Test** is not much different
-with writing simple django tests except for a few simple things.
+writing tests for your django views. Writing tests using **DRF Test** is not much different
+from writing simple django tests except for a few simple things.
 
 Your test classes should extend either `BaseViewTest` or `BaseAuthenticatedViewTest` and implement
 their abstract methods. Each test class tests only a single url which is handled by methods
@@ -124,8 +133,9 @@ def _get_permission_classes(self):
 ```
 
 Finally whenever you need to make a request use `self._get_for_response`, `self._post_for_response`,
-`self._put_for_response`, `self._head_for_response` and `self._patch_for_response`. Here's what each 
+`self._put_for_response`, `self._head_for_response` or `self._patch_for_response`. Here's what each 
 of their parameters does (None of them are required. They all have default values.):
+
 * **User** is user of the request. User will be authenticated using `AuthProvider` you wrote earlier.
 If user is not given, request will be sent using an anonymous user.
 * **data** is body of requests (in case of things like POST) or query parameters (in case of
@@ -137,10 +147,11 @@ for multipart requests.
 * **extra [as kwargs]** Headers can be passed as kwargs.
 
 # Using generated docs
-Docs are generated to be used with [mkdocs](https://www.mkdocs.org/). Installing it takes onnly
+Docs are generated to be used with [mkdocs](https://www.mkdocs.org/). Installing it takes only
 a single command. After installing it you can use `mkdocs serve` to run the docs and then
 visit them at `http://localhost:8000`. You can 
-also generate a static website out of it very easily. For more information visit [mkdocs](https://www.mkdocs.org/).
+also generate a static website out of it very easily. 
+For more information visit [mkdocs](https://www.mkdocs.org/).
 
 Here's how you can install mkdocs onn mac and ubuntu respectively.
 

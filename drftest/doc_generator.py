@@ -1,7 +1,6 @@
 import os
 import shutil
 import textwrap
-from typing import Dict
 
 from django.conf import settings
 from django.template import loader
@@ -35,7 +34,7 @@ class_docs keeps a dictionary which maps name of test class to its docs.
 class_docs = {}
 
 
-def _categorize_store() -> Dict:
+def _categorize_store():
     """
     doc entry for each test case in `BaseViewTest` is a flat dictionary. with no categorization
     based on app, class or method.
@@ -86,7 +85,8 @@ def _clear_docs_path():
 def _rewrite_yml(root_dir: str):
     yml_path = os.path.join(root_dir, 'mkdocs.yml')
     with open(yml_path, 'w+') as yml_file:
-        yml_file.write('site_name: DRF Tests')
+        yml_file.write('site_name: DRF Tests\n')
+        yml_file.write('theme: readthedocs\n')
 
 
 def write_docs():
@@ -111,10 +111,10 @@ def write_docs():
         index_file.write("""
 # Welcome
 
-Welcome to *DRF Test* documentation. 
+Welcome to *DRF Test* documentation.
 
 This documentation is categorized according to subsystems of your code.
-Name of each subsystem is given in the navigation menu. You can click on 
+Name of each subsystem is given in the navigation menu. You can click on
 each item to visit documentation of that subsystem.
 
 Happy coding :)
