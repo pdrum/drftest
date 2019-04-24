@@ -11,14 +11,22 @@ from drftest.tests.doc_schema import doc_schema
 
 
 class DummyView(ViewSet):
+    content_type = 'application/json'
+
     def handle_put(self, request: Request) -> Response:
-        return Response(status=status.HTTP_200_OK, data={'a': 'b'})
+        r = Response(status=status.HTTP_200_OK, data={'a': 'b'})
+        r['Content-Type'] = 'application/json'
+        return r
 
     def handle_delete(self, request: Request, pk) -> Response:
-        return Response(status=status.HTTP_200_OK, data={'c': 'd'})
+        r = Response(status=status.HTTP_200_OK, data={'c': 'd'})
+        r['Content-Type'] = 'application/json'
+        return r
 
     def handle_post(self, request: Request) -> Response:
-        return Response(status=status.HTTP_200_OK, data={'e': 'f'})
+        r = Response(status=status.HTTP_200_OK, data={'e': 'f'})
+        r['Content-Type'] = 'application/json'
+        return r
 
 
 urlpatterns = [

@@ -53,9 +53,15 @@ This class has the following test cases:
 
 {% if method_doc.response.data %}
 * **Response data:** 
+{% if method_doc.response.content_type == 'application/json' %}
 ```json
 {{ method_doc.response.data|to_json }}
 ```
+{% else %}
+{% for r in method_doc.response.data %}|{% for c in r %}{{ c }}|{% endfor %}
+|{% for c in r %}|{% endfor %}
+{% endfor %}
+{% endif %}
 {% endif %}
 
 </details>
