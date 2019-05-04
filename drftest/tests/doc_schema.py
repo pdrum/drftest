@@ -29,6 +29,7 @@ doc_schema = Schema({
     },
     'response': {
         'data': And(Use(is_json_serializable)),
+        'content_type': And(Use(str)),
         'status': And(Use(int)),
     }
 })

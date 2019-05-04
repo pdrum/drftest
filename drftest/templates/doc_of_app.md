@@ -53,9 +53,15 @@ This class has the following test cases:
 
 {% if method_doc.response.data %}
 * **Response data:** 
+{% if method_doc.response.content_type == 'application/json' %}
 ```json
 {{ method_doc.response.data|to_json }}
 ```
+{% elif method_doc.response.content_type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' %}
+{% for row in method_doc.response.data %}|{% for cell in row %}{{ cell }}|{% endfor %}
+|{% for cell in row %}|{% endfor %}
+{% endfor %}
+{% endif %}
 {% endif %}
 
 </details>

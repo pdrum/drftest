@@ -4,6 +4,7 @@ import logging
 import traceback
 from abc import abstractmethod
 
+import xlrd
 from django.conf import settings
 from django.urls import resolve
 from rest_framework import status
@@ -18,6 +19,8 @@ ABCTestMeta.add_ignored_test_class_name('BaseViewTest')
 
 
 class BaseViewTest(APITestCase, metaclass=ABCTestMeta):
+    XLSX_RESPONSE_CONTENT_TYPE = \
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     auth_provider_class = None
     current_test_name = None
     current_test_doc = None
@@ -178,7 +181,7 @@ class BaseViewTest(APITestCase, metaclass=ABCTestMeta):
             self.api_client.patch: 'patch',
             self.api_client.put: 'put'
         }[method]
-        response_data = response.data if hasattr(response, 'data') else {}
+        response_data = self._get_response_data(response)
         headers = headers or {}
         headers.update(self._get_auth_provider().get_auth_headers(user))
         doc_generator.class_docs[self.__class__.__name__] = self.__class__.__doc__
@@ -197,10 +200,23 @@ class BaseViewTest(APITestCase, metaclass=ABCTestMeta):
                 'app_name': app_name
             },
             'response': {
-                'data': self._ensure_json_serializable(response_data),
+                'data': response_data,
+                'content_type': response['content-type'],
                 'status': response.status_code,
             }
         })
+
+    def _get_response_data(self, response):
+        if response.get('content-type') == 'application/json':
+            data = response.data if hasattr(response, 'data') else {}
+            return self._ensure_json_serializable(data)
+        if response.get('content-type') == self.XLSX_RESPONSE_CONTENT_TYPE:
+            return self._generate_excel_from_byte(response.content)
+
+    def _generate_excel_from_byte(self, bytes):
+        wb = xlrd.open_workbook(file_contents=bytes)
+        sheet = wb.sheet_by_index(0)
+        return [[cell.value or '-' for cell in row] for row in sheet.get_rows()]
 
     @abstractmethod
     def _get_view_class(self):
