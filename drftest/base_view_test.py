@@ -211,9 +211,9 @@ class BaseViewTest(APITestCase, metaclass=ABCTestMeta):
             data = response.data if hasattr(response, 'data') else {}
             return self._ensure_json_serializable(data)
         if response.get('content-type') == self.XLSX_RESPONSE_CONTENT_TYPE:
-            return self._generate_object_from_byte(response.content)
+            return self._generate_excel_from_byte(response.content)
 
-    def _generate_object_from_byte(self, bytes):
+    def _generate_excel_from_byte(self, bytes):
         wb = xlrd.open_workbook(file_contents=bytes)
         sheet = wb.sheet_by_index(0)
         return [[cell.value or '-' for cell in row] for row in sheet.get_rows()]
