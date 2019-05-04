@@ -24,3 +24,4 @@ twine==1.12.1
 urllib3==1.24.1
 webencodings==0.5.1
 xlrd==1.2.0
+XlsxWriter==1.1.6
