@@ -1,5 +1,5 @@
 bleach==3.0.2
-certifi==2018.10.15
+certifi==2022.12.7
 chardet==3.0.4
 Django>=1.11.0
 django-nose==1.4.6
